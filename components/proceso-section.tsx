@@ -50,7 +50,7 @@ export const ProcesoSection = () => {
                 </div>
                 <div className="pt-1">
                   <h4 className="text-lg font-semibold text-slate-900">Preparación (Inglés y NCLEX)</h4>
-                  <div className="inline-block bg-slate-100 px-2 py-0.5 rounded text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-2 mt-1">6 a 20 meses</div>
+                  <div className="inline-block bg-slate-100 px-2 py-0.5 rounded text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-2 mt-1">6 meses o más</div>
                   <p className="text-sm text-slate-500 leading-relaxed">
                     El tiempo total del proceso varía según tu nivel de inglés inicial y tu dedicación. Cursos de inglés en línea en vivo para todos los niveles y preparación para el NCLEX.
                   </p>
@@ -63,8 +63,8 @@ export const ProcesoSection = () => {
                   <span className="font-bold text-lg font-mono">02</span>
                 </div>
                 <div className="pt-1">
-                  <h4 className="text-lg font-semibold text-slate-900">Validación académica / Licenciamiento</h4>
-                  <div className="inline-block bg-slate-100 px-2 py-0.5 rounded text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-2 mt-1">Variable</div>
+                  <h4 className="text-lg font-semibold text-slate-900">Aprobación de exámenes</h4>
+                  <div className="inline-block bg-slate-100 px-2 py-0.5 rounded text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-2 mt-1">Inmediato</div>
                   <p className="text-sm text-slate-500 leading-relaxed">
                     Trámites académicos, aprobación de exámenes y obtención de credenciales oficiales en EE.UU.
                   </p>
@@ -89,13 +89,22 @@ export const ProcesoSection = () => {
 
           {/* Visual */}
           <div className="relative lg:h-[500px] flex items-center justify-center">
-            <Image
-              src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/5a5e47bb-243a-4c10-8667-70b3faf5884c_800w.jpg"
-              alt="Medical Study"
-              width={800}
-              height={500}
-              className="rounded-2xl shadow-2xl shadow-indigo-900/10 object-cover h-full w-full rotate-2 hover:rotate-0 transition-transform duration-500 border-4 border-white"
-            />
+            <div className="relative">
+              {/* Sombras de color decorativas */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-2xl blur-2xl opacity-30 animate-pulse"></div>
+              <div className="absolute -inset-2 bg-gradient-to-br from-blue-400 to-indigo-600 rounded-2xl blur-xl opacity-20"></div>
+              
+              <Image
+                src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/5a5e47bb-243a-4c10-8667-70b3faf5884c_800w.jpg"
+                alt="Medical Study"
+                width={800}
+                height={500}
+                className="relative rounded-2xl shadow-2xl shadow-indigo-500/40 object-cover h-full w-full rotate-2 hover:rotate-0 transition-all duration-500 border-4 border-white hover:shadow-indigo-500/60 hover:shadow-3xl"
+                style={{
+                  boxShadow: '0 25px 50px -12px rgba(99, 102, 241, 0.4), 0 0 0 1px rgba(139, 92, 246, 0.2), 0 10px 40px -10px rgba(168, 85, 247, 0.3)'
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>

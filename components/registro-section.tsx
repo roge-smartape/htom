@@ -1,15 +1,16 @@
 'use client'
 
 import { useState } from 'react'
-import type { RegistroFormData } from '@/types'
+import type { FormData } from '@/types'
 
 export const RegistroSection = () => {
-  const [formData, setFormData] = useState<RegistroFormData>({
+  const [formData, setFormData] = useState<FormData>({
     nombres: '',
     apellidos: '',
     email: '',
     telefono: '',
     nivelIngles: '',
+    statusAcademico: '',
     aceptaTerminos: false,
   })
   const [isLoading, setIsLoading] = useState(false)
@@ -36,7 +37,7 @@ export const RegistroSection = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          tipo: 'registro-completo',
+          tipo: 'solicitud',
           datos: formData,
         }),
       })
@@ -59,6 +60,7 @@ export const RegistroSection = () => {
         email: '',
         telefono: '',
         nivelIngles: '',
+        statusAcademico: '',
         aceptaTerminos: false,
       })
     } catch (error) {
@@ -184,7 +186,26 @@ export const RegistroSection = () => {
                   <option value="intermedio">Intermedio (B1-B2)</option>
                   <option value="avanzado">Avanzado (C1+)</option>
                 </select>
-                <iconify-icon icon="solar:alt-arrow-down-linear" className="absolute right-4 top-3.5 text-slate-400 pointer-events-none"></iconify-icon>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label htmlFor="statusAcademico" className="text-[11px] uppercase tracking-wider font-bold text-slate-500">Status Académico</label>
+              <div className="relative">
+                <select
+                  id="statusAcademico"
+                  name="statusAcademico"
+                  value={formData.statusAcademico}
+                  onChange={handleChange}
+                  required
+                  disabled={isLoading}
+                  className="w-full appearance-none rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 focus:border-indigo-600 focus:bg-white outline-none cursor-pointer hover:bg-slate-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <option value="">Selecciona una opción</option>
+                  <option value="titulo">Licenciatura en Enfermería (Título)</option>
+                  <option value="tramite">Licenciatura (En trámite)</option>
+                  <option value="tecnico" disabled className="bg-slate-100 text-slate-400">Técnico (No elegible)</option>
+                </select>
               </div>
             </div>
 

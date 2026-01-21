@@ -2,14 +2,17 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
-import type { HeroFormData } from '@/types'
+import type { FormData } from '@/types'
 
 export const HeroSection = () => {
-  const [formData, setFormData] = useState<HeroFormData>({
-    nombre: '',
-    apellido: '',
+  const [formData, setFormData] = useState<FormData>({
+    nombres: '',
+    apellidos: '',
     email: '',
+    telefono: '',
+    nivelIngles: '',
     statusAcademico: '',
+    aceptaTerminos: false,
   })
   const [isLoading, setIsLoading] = useState(false)
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
@@ -26,7 +29,7 @@ export const HeroSection = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          tipo: 'pre-calificacion',
+          tipo: 'solicitud',
           datos: formData,
         }),
       })
@@ -44,10 +47,13 @@ export const HeroSection = () => {
 
       // Limpiar formulario
       setFormData({
-        nombre: '',
-        apellido: '',
+        nombres: '',
+        apellidos: '',
         email: '',
+        telefono: '',
+        nivelIngles: '',
         statusAcademico: '',
+        aceptaTerminos: false,
       })
     } catch (error) {
       setMessage({
@@ -61,9 +67,10 @@ export const HeroSection = () => {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const value = e.target.type === 'checkbox' ? (e.target as HTMLInputElement).checked : e.target.value
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [e.target.name]: value,
     })
   }
 
@@ -155,13 +162,13 @@ export const HeroSection = () => {
               <form className="space-y-5" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label htmlFor="nombre" className="text-[11px] uppercase tracking-wider font-bold text-slate-400">Nombre</label>
+                    <label htmlFor="nombres" className="text-[11px] uppercase tracking-wider font-bold text-slate-400">Nombre(s)</label>
                     <input
                       type="text"
-                      id="nombre"
-                      name="nombre"
+                      id="nombres"
+                      name="nombres"
                       placeholder="Tu nombre"
-                      value={formData.nombre}
+                      value={formData.nombres}
                       onChange={handleChange}
                       required
                       disabled={isLoading}
@@ -169,13 +176,13 @@ export const HeroSection = () => {
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <label htmlFor="apellido" className="text-[11px] uppercase tracking-wider font-bold text-slate-400">Apellido</label>
+                    <label htmlFor="apellidos" className="text-[11px] uppercase tracking-wider font-bold text-slate-400">Apellidos</label>
                     <input
                       type="text"
-                      id="apellido"
-                      name="apellido"
+                      id="apellidos"
+                      name="apellidos"
                       placeholder="Tu apellido"
-                      value={formData.apellido}
+                      value={formData.apellidos}
                       onChange={handleChange}
                       required
                       disabled={isLoading}
@@ -201,6 +208,39 @@ export const HeroSection = () => {
                   </div>
                 </div>
                 <div className="space-y-1.5">
+                  <label htmlFor="telefono" className="text-[11px] uppercase tracking-wider font-bold text-slate-400">Teléfono / WhatsApp</label>
+                  <input
+                    type="tel"
+                    id="telefono"
+                    name="telefono"
+                    placeholder="+52 (55) 1234 5678"
+                    value={formData.telefono}
+                    onChange={handleChange}
+                    required
+                    disabled={isLoading}
+                    className="w-full rounded-lg border border-slate-200 bg-slate-50/50 px-3 py-2.5 text-sm focus:border-indigo-500 focus:bg-white focus:ring-1 focus:ring-indigo-500 outline-none transition-all placeholder:text-slate-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <label htmlFor="nivelIngles" className="text-[11px] uppercase tracking-wider font-bold text-slate-400">Nivel de Inglés</label>
+                  <div className="relative">
+                    <select
+                      id="nivelIngles"
+                      name="nivelIngles"
+                      value={formData.nivelIngles}
+                      onChange={handleChange}
+                      required
+                      disabled={isLoading}
+                      className="w-full appearance-none rounded-lg border border-slate-200 bg-slate-50/50 px-3 py-2.5 text-sm text-slate-700 focus:border-indigo-500 focus:bg-white outline-none cursor-pointer hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      <option value="">Selecciona una opción</option>
+                      <option value="basico">Básico (A1-A2)</option>
+                      <option value="intermedio">Intermedio (B1-B2)</option>
+                      <option value="avanzado">Avanzado (C1+)</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="space-y-1.5">
                   <label htmlFor="statusAcademico" className="text-[11px] uppercase tracking-wider font-bold text-slate-400">Status Académico</label>
                   <div className="relative">
                     <select
@@ -217,7 +257,24 @@ export const HeroSection = () => {
                       <option value="tramite">Licenciatura (En trámite)</option>
                       <option value="tecnico" disabled className="bg-slate-100 text-slate-400">Técnico (No elegible)</option>
                     </select>
-                    <iconify-icon icon="solar:alt-arrow-down-linear" className="absolute right-3 top-3 text-slate-400 pointer-events-none"></iconify-icon>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 pt-2">
+                  <div className="flex h-5 items-center">
+                    <input
+                      id="aceptaTerminos"
+                      name="aceptaTerminos"
+                      type="checkbox"
+                      checked={formData.aceptaTerminos}
+                      onChange={handleChange}
+                      required
+                      disabled={isLoading}
+                      className="h-4 w-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                    />
+                  </div>
+                  <div className="text-xs text-slate-500">
+                    <label htmlFor="aceptaTerminos" className="font-medium text-slate-700">Acepto la política de privacidad</label>
+                    <p>Doy consentimiento para ser contactado por WhatsApp o correo sobre el programa.</p>
                   </div>
                 </div>
                 <button
